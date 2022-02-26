@@ -71,16 +71,19 @@ const loadGalleryFood = async (data)=>{
         // show gallerry image and title 
 
         const galalryImage = document.getElementById('galalryImage');
+
+        galalryImage.innerText = '';
       
         const div = document.createElement('div');
         // add id 
         div.setAttribute('id',`tm-gallery-page-${data}`);
         div.classList.add('tm-gallery-page');
+      
 
         getNewUrl.meals.forEach(getData => {
           const article = document.createElement('article');
           article.className = 'col-lg-4 col-md-4 col-sm-6 col-12 tm-gallery-item';
-          article.innerText = '';
+          
           
             const allHtml = `
             
@@ -118,3 +121,67 @@ const loadGalleryFood = async (data)=>{
 }
 
 
+
+
+const loadAllFood = async()=>{
+
+    try{
+        const url = await  `https://www.themealdb.com/api/json/v1/1/search.php?f=a`;
+        const fetchData = await fetch(url);
+        const convertJson = await fetchData.json();
+        //  console.log(fetchData.url);
+         console.log(convertJson);
+        const getNewUrl = convertJson;
+
+        // show gallerry image and title 
+
+        const galalryImage = document.getElementById('galalryImage');
+
+        galalryImage.innerText = '';
+      
+        const div = document.createElement('div');
+        // add id 
+        div.setAttribute('id',`tm-gallery-page`);
+        div.classList.add('tm-gallery-page');
+      
+
+        getNewUrl.meals.forEach(getData => {
+          const article = document.createElement('article');
+          article.className = 'col-lg-4 col-md-4 col-sm-6 col-12 tm-gallery-item';
+          
+          
+            const allHtml = `
+            
+            <article class="">
+                <figure>
+                    <img src="${getData.strMealThumb}" alt="Image" class="img-fluid tm-gallery-img" />
+                    <figcaption>
+                        <h4 class="tm-gallery-title">${getData.strMeal}</h4>
+                        <h5 class="tm-gallery-title" style="text-align:center; font-size:20px; color:black;">${getData.strCategory}</h5>
+                        <h6 class="tm-gallery-title"> State Are : ${getData.strArea}</h6>
+                        <p class="tm-gallery-description">${getData.strInstructions.slice(0,120)}</p>
+                        <p class="tm-gallery-price">$45 / $55</p>
+                    </figcaption>
+                </figure>
+            </article>
+            `;
+
+            article.innerHTML = allHtml;
+            div.appendChild( article);
+
+            galalryImage.appendChild(div);
+
+            console.log("get Data ", getData);
+        });
+       
+
+
+
+      //  console.log(getNewUrl);
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+loadAllFood();
