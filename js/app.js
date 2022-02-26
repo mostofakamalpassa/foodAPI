@@ -171,7 +171,7 @@ const loadAllFood = async()=>{
 
             galalryImage.appendChild(div);
 
-            console.log("get Data ", getData);
+           // console.log("get Data ", getData);
         });
        
 
@@ -185,3 +185,36 @@ const loadAllFood = async()=>{
 
 
 loadAllFood();
+
+
+const singleFoodLoad = async ()=>{
+
+    const url = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772`);
+
+    let data = await url.json();
+
+    data = data.meals[0];
+
+    console.log(data);
+
+    const singleProduct = document.getElementById('single-product');
+
+    singleProduct.innerHTML = `
+    <div class="row">
+    <div class="col-md-6">
+        <figure class="tm-description-figure">
+            <img src="${data.strMealThumb}" alt="Image" class="img-fluid" />
+        </figure>
+    </div>
+    <div class="col-md-6">
+        <div class="tm-description-box"> 
+            <h4 class="tm-gallery-title">${data.strMeal}</h4>
+            <p class="tm-mb-45"> ${data.strInstructions} </p>
+        </div>
+    </div>
+</div>
+    `;
+}
+
+
+singleFoodLoad();
